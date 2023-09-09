@@ -9,8 +9,8 @@ export default [
     children: [
       {
         path: '',
-        name: 'dashboard',
-        component: () => import('@/views/DashboardView.vue'),
+        name: 'welcome',
+        component: () => import('@/views/WelcomeView.vue'),
       },
     ],
   },

@@ -29,7 +29,7 @@ async function onSubmit() {
     }
     
     router.push({
-      name: 'dashboard',
+      name: 'welcome',
     });
   }
 }
@@ -52,12 +52,12 @@ async function onSubmit() {
                 <div class="m-sm-3">
                   <form @submit.prevent="onSubmit">
                     <div class="mb-3">
-                      <label class="form-label">Email (admin@super.com)</label>
+                      <label class="form-label">Email</label>
                       <input v-bind="email" :class="{ 'border border-danger': errors.email }" class="form-control form-control-lg" type="email" placeholder="Enter your email" />
                       <span class="text-danger" v-if="errors.email">{{ errors.email }}</span>
                     </div>
                     <div class="mb-3">
-                      <label class="form-label">Password (basicpassword)</label>
+                      <label class="form-label">Password</label>
                       <input v-bind="password" :class="{ 'border border-danger': errors.password }" class="form-control form-control-lg" type="password" placeholder="Enter your password" />
                       <span class="text-danger" v-if="errors.password">{{ errors.password }}</span>
                     </div>

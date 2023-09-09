@@ -1,0 +1,39 @@
+[
+  {
+    "name": "Overview",
+    "isEnabled": true,
+    "items": [
+      {
+        "name": "Welcome",
+        "route": "welcome",
+        "isEnabled": true
+      }
+    ]
+  },
+  {
+    "name": "Products",
+    "isEnabled": true,
+    "items": [
+      {
+        "name": "Categories",
+        "route": "login",
+        "isEnabled": true
+      },
+      {
+        "name": "Brands",
+        "route": "login",
+        "isEnabled": true
+      },
+      {
+        "name": "Variants",
+        "route": "login",
+        "isEnabled": true
+      },
+      {
+        "name": "Features",
+        "route": "login",
+        "isEnabled": true
+      }
+    ]
+  }
+]

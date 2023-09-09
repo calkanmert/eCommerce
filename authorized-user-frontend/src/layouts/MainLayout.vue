@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
 import { useAuthStore } from '@/stores/auth';
+import SidebarNavComponent from '@/components/layout/SidebarNavComponent.vue';
 
 const authStore = useAuthStore();
 const { user } = storeToRefs(authStore); 
@@ -13,17 +14,7 @@ const { user } = storeToRefs(authStore);
           <a class="sidebar-brand" href="index.html">
             <span class="align-middle">eCommerce</span>
           </a>
-
-          <ul class="sidebar-nav">
-            <li class="sidebar-header">Pages</li>
-
-            <li class="sidebar-item active">
-              <a class="sidebar-link" href="index.html">
-                <vue-feather size="18" class="align-middle" type="sliders"></vue-feather>
-                <span class="align-middle">Dashboard</span>
-              </a>
-            </li>
-          </ul>
+          <SidebarNavComponent />
         </div>
       </nav>
 
