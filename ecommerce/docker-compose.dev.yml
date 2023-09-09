@@ -1,0 +1,49 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:13
+    container_name: ecommerce_postgres
+    env_file:
+      - .env
+    ports:
+      - ${POSTGRES_PORT}:5432
+    volumes:
+      - ./postgres:/data/postgres
+  api:
+    build:
+      context: ../api
+      dockerfile: Dockerfile.dev
+    container_name: ecommerce_api
+    env_file:
+      - .env
+    environment:
+      - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD_URLENCODED}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?schema=public
+    ports:
+      - ${API_PORT}:3200
+    volumes:
+      - ../api:/usr/src/app
+    depends_on:
+      - postgres
+      - redis
+  authorized-user-frontend:
+    build:
+      context: ../authorized-user-frontend
+      dockerfile: Dockerfile.dev
+    container_name: ecommerce_authorized_user_frontend
+    env_file:
+      - .env
+    ports:
+      - ${ADMIN_FRONTEND_PORT}:5173
+    volumes:
+      - ../authorized-user-frontend:/usr/src/app
+  redis:
+    image: redis:alpine3.18
+    container_name: ecommerce_redis
+    env_file:
+      - .env
+    command: ["sh", "-c", 'redis-server --requirepass "$$(echo $REDIS_PASSWORD)"']
+    ports:
+      - ${REDIS_PORT}:6379
+    volumes:
+      - ./redis:/data/redis
