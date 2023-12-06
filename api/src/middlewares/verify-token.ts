@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
-import { verifyAuthorizedUserToken } from '../services/auth';
 import ApiError from '../helpers/api-error';
-import AuthorizedUser from '../services/authorized-user';
+import AuthorizedUser from '../core/user/authorized-user';
+import AuthorizedUserToken from '../core/token/authorized-user-token';
+import AuthorizedUserAuth from '../core/auth/authorized-user-auth';
 
 function throwUnauthorizedAccess() {
   throw new ApiError('Unauthorized access', 401);
@@ -13,17 +14,17 @@ async function verifyAuthorizedUser(req: Request, res: Response, next: NextFunct
     if (!accessToken) {
       throwUnauthorizedAccess();
     }
-    const tokenData = await verifyAuthorizedUserToken(accessToken.toString());
-    if (typeof tokenData !== 'string') {
-      const user = await AuthorizedUser.getById(tokenData.id);
-      if (!user) {
-        throwUnauthorizedAccess();
-      }
-      req.authorizedUser = user;
-      next();
+    const token = await AuthorizedUserToken.getByAccessToken(accessToken.toString());
+    await token.verifyAccess();
+    const user = await AuthorizedUser.getById(token.authorizedUserId);
+    if (!user.id) {
+      throwUnauthorizedAccess();
     }
-  } catch (e) {
-    next(e);
+    req.authorizedUserAuth = new AuthorizedUserAuth(user, token);
+    next();
+  } catch (e: any) {
+    const error = new ApiError(e.message);
+    next(error);
   }
 }
 

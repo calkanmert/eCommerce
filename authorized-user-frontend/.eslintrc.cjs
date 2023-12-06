@@ -19,5 +19,7 @@ module.exports = {
     "@typescript-eslint/comma-dangle": ["error", "always-multiline"],
     "@typescript-eslint/indent": ["error", 2],
     "no-console": 1,
+    "vue/multi-word-component-names": 0,
+    "vue/no-reserved-component-names": 0,
   },
 };

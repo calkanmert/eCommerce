@@ -1,7 +1,7 @@
 const rateLimit = {
   auth: {
     windowMs: 5 * 60 * 1000,
-    max: 30,
+    max: 999,
     standardHeaders: true,
     legacyHeaders: false,
   },

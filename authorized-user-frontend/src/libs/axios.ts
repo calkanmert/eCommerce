@@ -3,6 +3,7 @@ import { useAuthStore } from '@/stores/auth';
 
 const tokenRequiredRoutes = [
   '/auth/authorized-user',
+  '/categories',
 ];
 
 const tokenRefreshRoute = '/auth/authorized-user/refresh';
@@ -31,10 +32,10 @@ instance.interceptors.response.use(
 
     try {
       switch (error.response.data.message) {
-        case 'access token expired':
+        case 'ACCESS_TOKEN_EXPIRED':
           await store.tokenRefresh();
           return await instance(originalRequest);
-        case 'The token is invalid' || 'refresh token expired':
+        case 'INVALID_TOKEN' || 'REFRESH_TOKEN_EXPIRED':
           localStorage.removeItem('REFRESH_TOKEN');
           localStorage.removeItem('ACCESS_TOKEN');
           localStorage.removeItem('USER');

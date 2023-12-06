@@ -25,9 +25,19 @@ model AuthorizedUserToken {
   authorizedUserId  String    @map(name: "authorized_user_id")
   access            String    @unique
   refresh           String    @unique
-  enabled           Boolean   @default(true)
+  access_enabled    Boolean   @default(true)
+  refresh_enabled   Boolean   @default(true)
   createdAt         DateTime  @default(now()) @map(name: "created_at")
   updatedAt         DateTime  @updatedAt
   authorizedUser    AuthorizedUser   @relation(fields: [authorizedUserId], references: [id])
   @@map(name: "authorized_users_tokens")
+}
+
+model Category {
+  id                String    @id @default(uuid())
+  name              String
+  enabled           Boolean   @default(true)
+  createdAt         DateTime  @default(now()) @map(name: "created_at")
+  updatedAt         DateTime  @updatedAt @map(name: "updated_at")
+  @@map(name: "categories")
 }

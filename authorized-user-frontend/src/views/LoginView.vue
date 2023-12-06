@@ -1,37 +1,44 @@
 <script setup lang="ts">
-import { useRouter, useRoute } from 'vue-router';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
 import { useForm } from 'vee-validate';
 import formSchema from '@/form-schematics/login';
-import isHasError from '@/helpers/is-has-error';
 import Swal from 'sweetalert2';
+import { capitalizeFirstLetter } from '@/helpers/string-helper';
 
 const store = useAuthStore();
 const router = useRouter();
 
 const { login } = store;
-const { values, errors, defineInputBinds } = useForm({
+const { values, errors, defineInputBinds, meta } = useForm({
   validationSchema: formSchema,
+  initialValues: {
+    email: 'admin@super.com',
+    password: 'basicpassword',
+  },
 });
 const email = defineInputBinds('email');
 const password = defineInputBinds('password');
 
+const spinnerState = ref(false);
+
 async function onSubmit() {
-  if (!isHasError(errors.value)) {
-    const result = await login(values.email, values.password);
-    if (!result.status) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error!',
-        text: result.data.message,
-      });
-      return;
-    }
-    
-    router.push({
-      name: 'welcome',
+  spinnerState.value = true;
+  const result = await login(values.email, values.password);
+  if (!result.status) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error!',
+      text: result.data.message,
     });
+    spinnerState.value = false;
+    return;
   }
+  
+  router.push({
+    name: 'welcome',
+  });
 }
 </script>
 
@@ -54,12 +61,12 @@ async function onSubmit() {
                     <div class="mb-3">
                       <label class="form-label">Email</label>
                       <input v-bind="email" :class="{ 'border border-danger': errors.email }" class="form-control form-control-lg" type="email" placeholder="Enter your email" />
-                      <span class="text-danger" v-if="errors.email">{{ errors.email }}</span>
+                      <span class="text-danger" v-if="errors.email">{{ capitalizeFirstLetter(errors.email) }}.</span>
                     </div>
                     <div class="mb-3">
                       <label class="form-label">Password</label>
                       <input v-bind="password" :class="{ 'border border-danger': errors.password }" class="form-control form-control-lg" type="password" placeholder="Enter your password" />
-                      <span class="text-danger" v-if="errors.password">{{ errors.password }}</span>
+                      <span class="text-danger" v-if="errors.password">{{ capitalizeFirstLetter(errors.password) }}.</span>
                     </div>
                     <div>
                       <div class="form-check align-items-center">
@@ -68,7 +75,8 @@ async function onSubmit() {
                       </div>
                     </div>
                     <div class="d-grid gap-2 mt-3">
-                      <button type="submit" href="#" class="btn btn-lg btn-primary" :disabled="isHasError(errors)">Sign in</button>
+                      <button type="submit" href="#" class="btn btn-lg btn-primary" v-if="!spinnerState" :disabled="!meta.valid">Sign in</button>
+                      <ProgressSpinner v-else style="width:40px; height:40px" strokeWidth="7" />
                     </div>
                   </form>
                 </div>

@@ -11,26 +11,26 @@
     ]
   },
   {
-    "name": "Products",
+    "name": "Product",
     "isEnabled": true,
     "items": [
       {
-        "name": "Categories",
+        "name": "Category",
+        "route": "product.category",
+        "isEnabled": true
+      },
+      {
+        "name": "Brand",
         "route": "login",
         "isEnabled": true
       },
       {
-        "name": "Brands",
+        "name": "Variant",
         "route": "login",
         "isEnabled": true
       },
       {
-        "name": "Variants",
-        "route": "login",
-        "isEnabled": true
-      },
-      {
-        "name": "Features",
+        "name": "Feature",
         "route": "login",
         "isEnabled": true
       }

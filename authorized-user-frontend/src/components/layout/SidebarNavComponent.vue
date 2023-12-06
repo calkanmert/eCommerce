@@ -10,11 +10,11 @@ import menuItems from '@/repository/menu-items.json';
         <template v-for="(item, itemIndex) in category.items" :key="itemIndex">
           <router-link
             :to="{ name: item.route } "
-            v-slot="{ isActive }"
+            v-slot="{ isExactActive }"
             v-if="item.isEnabled"
             class="text-decoration-none"
           >
-            <li class="sidebar-item" :class="[isActive && 'active']">
+            <li class="sidebar-item" :class="[isExactActive && 'active']">
               <a class="sidebar-link">
                 <vue-feather size="11" class="align-middle" type="circle"></vue-feather>
                 <span class="align-middle">{{ item.name }}</span>

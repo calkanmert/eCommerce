@@ -20,6 +20,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.use('/auth', rateLimit(config.rateLimit.auth), routes.authRoutes);
+app.use('/categories', routes.categoryRoutes);
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   logger.error('main try catch err! Message:', err);

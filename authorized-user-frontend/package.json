@@ -16,6 +16,7 @@
     "axios": "^1.5.0",
     "feather-icons": "^4.29.1",
     "pinia": "^2.1.6",
+    "primeicons": "^6.0.1",
     "primevue": "^3.33.0",
     "sweetalert2": "^11.7.27",
     "vee-validate": "^4.11.3",

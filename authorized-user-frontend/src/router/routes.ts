@@ -12,6 +12,11 @@ export default [
         name: 'welcome',
         component: () => import('@/views/WelcomeView.vue'),
       },
+      {
+        path: '/product/category',
+        name: 'product.category',
+        component: () => import('@/views/product/CategoryView.vue'),
+      },
     ],
   },
   {

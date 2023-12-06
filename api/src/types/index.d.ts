@@ -1,11 +1,11 @@
-import { AuthorizedUser } from '../services/authorized-user';
+import AuthorizedUserAuth from '../core/auth/authorized-user-auth';
 
 export {};
 
 declare global {
   namespace Express {
     interface Request {
-      authorizedUser: AuthorizedUser;
+      authorizedUserAuth: AuthorizedUserAuth;
     }
   }
 }
